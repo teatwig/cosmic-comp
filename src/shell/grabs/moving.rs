@@ -408,9 +408,12 @@ impl MoveGrab {
             if matches!(self.previous, ManagedLayer::Floating | ManagedLayer::Sticky) {
                 let loc = grab_state.window_offset.to_f64() + grab_state.location;
                 let size = window_geo.size.to_f64();
-                let output_geom = self.cursor_output.geometry().to_f64().as_logical();
-                let output_loc = output_geom.loc;
-                let output_size = output_geom.size;
+                let non_exclusive_geometry = {
+                    let layers = layer_map_for_output(&self.cursor_output);
+                    layers.non_exclusive_zone()
+                }.to_f64();
+                let output_loc = non_exclusive_geometry.loc;
+                let output_size = non_exclusive_geometry.size;
 
                 grab_state.location.x = if (loc.x - output_loc.x).abs() < self.edge_snap_threshold {
                     output_loc.x - grab_state.window_offset.x as f64
