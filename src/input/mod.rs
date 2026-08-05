@@ -840,20 +840,22 @@ impl State {
                                                         return;
                                                     };
                                                     let geom = geom.to_f64();
-                                                    let center =
-                                                        geom.loc + geom.size.downscale(2.0);
-                                                    let offset =
-                                                        center.to_global(&output) - global_position;
-                                                    let edge =
-                                                        match (offset.x > 0.0, offset.y > 0.0) {
-                                                            (true, true) => ResizeEdge::TOP_LEFT,
-                                                            (false, true) => ResizeEdge::TOP_RIGHT,
-                                                            (true, false) => {
-                                                                ResizeEdge::BOTTOM_LEFT
-                                                            }
-                                                            (false, false) => {
-                                                                ResizeEdge::BOTTOM_RIGHT
-                                                            }
+                                                    let pointer_offset = global_position
+                                                        - geom.loc.to_global(&output);
+                                                    let offset_percent_x =
+                                                        pointer_offset.x / geom.size.w;
+                                                    let offset_percent_y =
+                                                        pointer_offset.y / geom.size.h;
+                                                    let edge = match offset_percent_x {
+                                                        x if x < 0.33 => ResizeEdge::LEFT,
+                                                        x if x > 0.67 => ResizeEdge::RIGHT,
+                                                        _ => ResizeEdge::empty(),
+                                                    };
+                                                    let edge = edge
+                                                        | match offset_percent_y {
+                                                            y if y < 0.33 => ResizeEdge::TOP,
+                                                            y if y > 0.67 => ResizeEdge::BOTTOM,
+                                                            _ => ResizeEdge::empty(),
                                                         };
                                                     let res = shell.resize_request(
                                                         &surface,
