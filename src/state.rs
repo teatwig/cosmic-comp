@@ -23,6 +23,7 @@ use crate::{
             output_configuration::OutputConfigurationState,
             output_power::OutputPowerState,
             overlap_notify::OverlapNotifyState,
+            qtea_toplevel_management::QteaToplevelManagementState,
             session_lock_layer::SessionLockLayerState,
             toplevel_info::ToplevelInfoState,
             toplevel_management::{ManagementCapabilities, ToplevelManagementState},
@@ -314,6 +315,7 @@ pub struct Common {
     pub layer_shell_state: WlrLayerShellState,
     pub toplevel_info_state: ToplevelInfoState<State, CosmicSurface>,
     pub toplevel_management_state: ToplevelManagementState,
+    pub qtea_toplevel_management_state: QteaToplevelManagementState,
     pub xdg_activation_state: XdgActivationState,
     pub xdg_foreign_state: XdgForeignState,
     pub workspace_state: WorkspaceState<State>,
@@ -760,6 +762,7 @@ impl State {
             ],
             client_not_sandboxed,
         );
+        let qtea_toplevel_management_state = QteaToplevelManagementState::new::<State>(dh);
         let workspace_state = WorkspaceState::new(dh, client_not_sandboxed);
 
         let a11y_state = A11yState::new::<State, _>(dh, client_not_sandboxed);
@@ -803,6 +806,7 @@ impl State {
                 cosmic_image_capture_source_state,
                 output_capture_source_state,
                 toplevel_capture_source_state,
+                qtea_toplevel_management_state,
                 image_copy_capture_state,
                 shm_state,
                 cursor_shape_manager_state,

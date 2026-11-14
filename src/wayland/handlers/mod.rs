@@ -38,6 +38,7 @@ pub mod tablet_manager;
 pub mod text_input;
 pub mod toplevel_info;
 pub mod toplevel_management;
+pub mod qtea_toplevel_management;
 pub mod virtual_keyboard;
 pub mod workspace;
 pub mod xdg_activation;

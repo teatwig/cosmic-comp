@@ -48,6 +48,7 @@ libsystemd = { version = "0.7", optional = true }
 log-panics = { version = "2", features = ["with-backtrace"] }
 ordered-float = "5.1"
 png = "0.18"
+qtea-cosmic-protocols = { git = "https://codeberg.org/qtea/qtea-cosmic-protocols", features = ["server"] }
 regex = "1"
 resvg = "0.45"
 ron = "0.12"

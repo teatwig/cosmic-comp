@@ -795,6 +795,7 @@ dependencies = [
  "parking_lot",
  "png 0.18.1",
  "profiling",
+ "qtea-cosmic-protocols",
  "rand 0.10.0",
  "regex",
  "resvg 0.45.1",
@@ -4114,6 +4115,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7186d3822593aa4393561d186d1393b3923e9d6163d3fbfd6e825e3e6cf3e6a8"
 dependencies = [
  "num-traits",
+]
+
+[[package]]
+name = "qtea-cosmic-protocols"
+version = "0.1.0"
+source = "git+https://codeberg.org/qtea/qtea-cosmic-protocols#dfd4be829a2d4f31d37f81af4d221c44e14a4b6c"
+dependencies = [
+ "cosmic-protocols",
+ "wayland-backend",
+ "wayland-scanner",
+ "wayland-server",
 ]
 
 [[package]]
