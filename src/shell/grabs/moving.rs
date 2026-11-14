@@ -423,6 +423,11 @@ impl MoveGrab {
             if matches!(self.previous, ManagedLayer::Floating | ManagedLayer::Sticky) {
                 let loc = grab_state.window_offset.to_f64() + grab_state.location;
                 let size = window_geo.size.to_f64();
+                // TODO the dock is also an exclusive zone, so we can no longer
+                // have full height windows with dock
+                // this kinda makes sense since snap zones also work like this
+                // but generally I feel like only things that span the entire output
+                // width/height should count here
                 let non_exclusive_geometry = {
                     let layers = layer_map_for_output(&self.cursor_output);
                     layers.non_exclusive_zone()
